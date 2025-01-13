@@ -193,25 +193,3 @@ export const GetCount = async <T extends Model>(
         throw error;
     }
 };
-
-export const GetCountGroup = async <T extends Model>(
-    Model: { new(): T; findAll: Function },
-    filter: WhereOptions,
-    groupBy: string
-): Promise<{ group: string; count: number }[]> => {
-    try {
-        const groupedData = await Model.findAll({
-            attributes: [groupBy, [fn("COUNT", col("*")), "count"]],
-            where: filter,
-            group: [groupBy],
-            raw: true,
-        });
-
-        return groupedData.map((item) => ({
-            group: item[groupBy],
-            count: parseInt(item.count, 10),
-        }));
-    } catch (error) {
-        throw error;
-    }
-};

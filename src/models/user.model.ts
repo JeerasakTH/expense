@@ -16,11 +16,14 @@ export class User extends Model {
     createAt!: Date
 }
 
-User.init(
+const UserModel = sequelize.define<User>(
+    'User',
     {
         user_id: {
-            type: DataType.STRING(),
+            type: DataType.UUID(),
+            primaryKey: true,
             allowNull: false,
+            defaultValue: DataType.UUIDV4(),
         },
         username: {
             type: DataType.STRING(),
@@ -31,17 +34,23 @@ User.init(
             allowNull: false,
         },
         email: {
-            type: DataType.DATE(),
+            type: DataType.STRING(),
             allowNull: false,
+            unique: true,
         },
-        createAt: {
+        createdAt: {
             type: DataType.DATE(),
             allowNull: false,
         }
     },
     {
-        sequelize,
-        tableName: 'user',
-        freezeTableName: true
+        tableName: "users", // ชื่อ Table ในฐานข้อมูล
+        timestamps: true, // สร้าง createdAt และ updatedAt อัตโนมัติ
+        freezeTableName: true, // ใช้ชื่อ Table ตามที่กำหนดไว้
     }
 )
+
+UserModel
+    .sync({ alter: true }) // ใช้ alter เพื่อปรับโครงสร้างตารางตาม Model
+    .then(() => console.log("Database synchronized!"))
+    .catch((error) => console.error("Error synchronizing database:", error));
