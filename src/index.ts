@@ -1,11 +1,15 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv'
 import routes from './routes'
+import cookieParser from "cookie-parser";
 
 dotenv.config()
 
 const app = express();
 const port = process.env.PORT || 3002
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/v1', routes)
 

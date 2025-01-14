@@ -7,23 +7,25 @@
 import { Model } from "sequelize"
 import { DataType } from "sequelize-typescript"
 import { sequelize } from "../utils/database"
+import { CreateOne, GetOne } from "../utils/repository"
+import bcrypt from "bcrypt";
 
 export class User extends Model {
     user_id!: string
     username!: string
     password!: string
     email!: string
-    createAt!: Date
+    createdAt!: Date
 }
 
-const UserModel = sequelize.define<User>(
+export const UserModel = sequelize.define<User>(
     'User',
     {
         user_id: {
-            type: DataType.UUID(),
+            type: DataType.UUID, // ไม่มีวงเล็บ
             primaryKey: true,
             allowNull: false,
-            defaultValue: DataType.UUIDV4(),
+            defaultValue: DataType.UUIDV4, // ไม่มีวงเล็บ
         },
         username: {
             type: DataType.STRING(),
@@ -52,5 +54,17 @@ const UserModel = sequelize.define<User>(
 
 UserModel
     .sync({ alter: true }) // ใช้ alter เพื่อปรับโครงสร้างตารางตาม Model
+    .then(async () => {
+        const existingAdmin = await GetOne(UserModel, { username: "admin" })
+        if (!existingAdmin) {
+            const hashedPassword = await bcrypt.hash("admin", 10);
+            await CreateOne(UserModel, {
+                username: "admin",
+                password: hashedPassword,
+                email: "admin@example.com",
+                createdAt: new Date()
+            })
+        }
+    })
     .then(() => console.log("Database synchronized!"))
     .catch((error) => console.error("Error synchronizing database:", error));
