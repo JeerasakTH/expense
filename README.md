@@ -33,7 +33,7 @@
 API ที่สามารถใช้งานได้
 
 1. http://localhost:3001/api/v1/auth/login
-   - ใช้สำหรับ Login เพื่อรับ Token โดนจะใส่ไว้ใน cookie
+   - ใช้สำหรับ Login เพื่อรับ Token โดยจะใส่ไว้ใน cookie
 2. http://localhost:3001/api/v1/account
    - ใช้สำหรับดูบัญชีทั้งหมด
 3. http://localhost:3001/api/v1/account/get_page?page=1&limit=10
