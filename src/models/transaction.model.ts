@@ -18,6 +18,7 @@ export class Transaction extends Model {
     category_id!: string
     amount_before!: number
     amount_latest!: number
+    amount!: number
     transaction_date!: Date
     note!: string
 }
@@ -51,6 +52,10 @@ export const TransactionModel = sequelize.define<Transaction>(
             allowNull: false,
         },
         amount_latest: {
+            type: DataType.DECIMAL(),
+            allowNull: false,
+        },
+        amount: {
             type: DataType.DECIMAL(),
             allowNull: false,
         },
