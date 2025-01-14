@@ -5,10 +5,6 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     try {
         const token = req.cookies?.authToken;
 
-        // console.log("token", req);
-        console.log("token", req.cookies);
-
-
         if (!token) {
             res.status(401).json({ message: "Unauthorized: No token provided." });
             return;

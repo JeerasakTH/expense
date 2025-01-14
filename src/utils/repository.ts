@@ -151,7 +151,7 @@ export const UpdateOne = async <T extends Model>(
             throw new Error("ไม่พบรายการที่ต้องการอัพเดต");
         }
 
-        const result = await Model.update(payload, { where: { id: resultOne.id } });
+        const result = await Model.update(payload, { where: resultOne });
         return result;
     } catch (error) {
         throw error;
@@ -172,7 +172,7 @@ export const DeleteOne = async <T extends Model>(
             throw new Error("ไม่พบรายการที่ต้องการลบ");
         }
 
-        const result = await Model.destroy({ where: { id: resultOne.id } });
+        const result = await Model.destroy({ where: resultOne });
         return result;
     } catch (error) {
         throw error;

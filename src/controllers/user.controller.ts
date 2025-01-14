@@ -73,6 +73,12 @@ export const create = async (req: Request, res: Response): Promise<void> => {
         }
 
         const user = await CreateOne(UserModel, payload)
+
+        res.status(200).json({
+            data: user,
+            message: 'Get Successfully',
+            status: "success"
+        })
     } catch (error) {
         console.error("Error: ", error);
         res.status(500).json({

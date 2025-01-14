@@ -22,10 +22,10 @@ export const UserModel = sequelize.define<User>(
     'User',
     {
         user_id: {
-            type: DataType.UUID, // ไม่มีวงเล็บ
+            type: DataType.UUID,
             primaryKey: true,
             allowNull: false,
-            defaultValue: DataType.UUIDV4, // ไม่มีวงเล็บ
+            defaultValue: DataType.UUIDV4,
         },
         username: {
             type: DataType.STRING(),
@@ -46,7 +46,7 @@ export const UserModel = sequelize.define<User>(
         }
     },
     {
-        tableName: "users", // ชื่อ Table ในฐานข้อมูล
+        tableName: "User", // ชื่อ Table ในฐานข้อมูล
         timestamps: true, // สร้าง createdAt และ updatedAt อัตโนมัติ
         freezeTableName: true, // ใช้ชื่อ Table ตามที่กำหนดไว้
     }
